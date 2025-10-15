@@ -5,174 +5,222 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo List</title>
   <style>
+    /* General Styles */
     body {
-      font-family: sans-serif;
+      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    body.dark-mode {
-      background-color: #222;
-      color: #eee;
+      background-color: #e9ecef; /* Light Gray Background */
+      color: #495057; /* Dark Gray Text */
+      line-height: 1.6;
     }
 
     .container {
       max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
+      margin: 30px auto;
+      padding: 30px;
       background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s;
-    }
-
-    .dark-mode .container {
-      background-color: #333;
-      box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 20px;
+      color: #343a40; /* Very Dark Gray */
+      margin-bottom: 30px;
+      font-weight: 700; /* Bold */
     }
 
-    #dark-mode-toggle {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-    }
-
-    #dark-mode-toggle.dark {
-       background-color: #555;
-       color: #fff;
-    }
-
+    /* Task Form Styles */
     #task-form {
-      display: flex;
-      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 1fr; /* Adjusted columns */
+      grid-gap: 15px;
+      margin-bottom: 25px;
+      align-items: center; /* Center items vertically */
     }
 
     #task-input {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
+      padding: 12px 15px;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #495057;
     }
 
-    #category-select, #priority-select {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-right: 10px;
-        width: 150px;
+    #task-input:focus {
+      outline: none;
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
 
+    #category-select,
+    #priority-select {
+      padding: 12px 15px;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #495057;
+      width: 100%; /* Full width for select elements */
+    }
 
     #add-task-btn {
-      background-color: #4CAF50;
+      background-color: #007bff; /* Primary Blue */
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 4px;
+      padding: 12px 20px;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s ease-in-out;
     }
 
     #add-task-btn:hover {
-      background-color: #3e8e41;
+      background-color: #0056b3; /* Darker Blue on Hover */
     }
 
+    /* Task List Styles */
     ul {
       list-style: none;
       padding: 0;
     }
 
     li {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
+      padding: 15px;
+      border-bottom: 1px solid #dee2e6; /* Light Gray Border */
       display: flex;
       align-items: center;
-      transition: background-color 0.3s;
+      justify-content: space-between; /* Distribute space evenly */
     }
 
-    .dark-mode li {
-      border-bottom: 1px solid #555;
-    }
-
-    li:hover {
-      background-color: #f0f0f0;
-    }
-
-    .dark-mode li:hover {
-      background-color: #444;
+    li:last-child {
+      border-bottom: none; /* Remove border from last item */
     }
 
     .task-text {
       flex: 1;
+      font-size: 18px;
     }
 
+    .completed {
+      text-decoration: line-through;
+      color: #adb5bd; /* Medium Gray for Completed Tasks */
+    }
+
+    .task-category,
+    .task-priority {
+      font-size: 0.9em;
+      color: #6c757d; /* Slightly Darker Gray */
+      margin-left: 15px;
+      white-space: nowrap; /* Prevent text wrapping */
+    }
+
+    .task-priority.high {
+      color: #dc3545; /* Red for High Priority */
+    }
+
+    .task-priority.medium {
+      color: #ffc107; /* Yellow for Medium Priority */
+    }
+
+    .task-priority.low {
+      color: #28a745; /* Green for Low Priority */
+    }
+
+    /* Button Styles */
     .complete-btn,
     .delete-btn {
-      background-color: #f44336;
+      background-color: #28a745; /* Green for Complete */
       color: white;
       border: none;
       padding: 8px 12px;
       border-radius: 4px;
       cursor: pointer;
       margin-left: 10px;
+      transition: background-color 0.2s ease-in-out;
     }
 
     .complete-btn {
-      background-color: #4CAF50;
+      background-color: #007bff; /* Blue for Complete */
     }
 
     .complete-btn:hover {
-        background-color: #3e8e41;
+      background-color: #0056b3; /* Darker Blue on Hover */
+    }
+
+    .delete-btn {
+      background-color: #dc3545; /* Red for Delete */
     }
 
     .delete-btn:hover {
-      background-color: #da190b;
+      background-color: #c82333; /* Darker Red on Hover */
     }
 
-    .completed {
-      text-decoration: line-through;
-      color: #888;
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #343a40;
+      color: #f8f9fa;
     }
 
-    .task-category {
-        font-size: 0.8em;
-        color: #777;
-        margin-left: 10px;
-    }
-    .dark-mode .task-category{
-        color: #bbb;
+    .dark-mode .container {
+      background-color: #212529;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
     }
 
-    .task-priority {
-        font-size: 0.8em;
-        margin-left: 10px;
-        font-weight: bold;
+    .dark-mode h1 {
+      color: #f8f9fa;
     }
 
-    .task-priority.high {
-        color: red;
+    .dark-mode #task-input,
+    .dark-mode #category-select,
+    .dark-mode #priority-select {
+      background-color: #495057;
+      color: #f8f9fa;
+      border-color: #6c757d;
     }
 
-    .task-priority.medium {
-        color: orange;
+    .dark-mode li {
+      border-bottom: 1px solid #495057;
     }
 
-    .task-priority.low {
-        color: green;
+    .dark-mode .completed {
+      color: #6c757d;
+    }
+
+    /* Dark Mode Toggle Button */
+    #dark-mode-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    #dark-mode-toggle:hover {
+      background-color: #495057;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      #task-form {
+        grid-template-columns: 1fr; /* Stack form elements on smaller screens */
+        grid-gap: 10px;
+      }
+
+      #category-select,
+      #priority-select {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -181,25 +229,26 @@
   <button id="dark-mode-toggle">Toggle Dark Mode</button>
 
   <div class="container">
-    <h1>Todo List</h1>
+    <h1>My Todo List</h1>
 
     <form id="task-form">
       <input type="text" id="task-input" placeholder="Add a new task..." required>
       <select id="category-select">
-          <option value="work">Work</option>
-          <option value="personal">Personal</option>
-          <option value="shopping">Shopping</option>
+        <option value="work">Work</option>
+        <option value="personal">Personal</option>
+        <option value="shopping">Shopping</option>
+        <option value="other">Other</option>
       </select>
       <select id="priority-select">
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
       </select>
       <button type="submit" id="add-task-btn">Add Task</button>
     </form>
 
     <ul id="task-list">
-      </ul>
+    </ul>
   </div>
 
   <script>
@@ -220,8 +269,10 @@
           <span class="task-text ${task.completed ? 'completed' : ''}">${task.text}</span>
           <span class="task-category">(${task.category})</span>
           <span class="task-priority ${task.priority}">${task.priority} Priority</span>
-          <button class="complete-btn" data-index="${index}">${task.completed ? 'Undo' : 'Complete'}</button>
-          <button class="delete-btn" data-index="${index}">Delete</button>
+          <div>
+             <button class="complete-btn" data-index="${index}">${task.completed ? 'Undo' : 'Complete'}</button>
+             <button class="delete-btn" data-index="${index}">Delete</button>
+          </div>
         `;
         taskList.appendChild(li);
       });
@@ -275,7 +326,6 @@
 
     darkModeToggle.addEventListener('click', function() {
       document.body.classList.toggle('dark-mode');
-      darkModeToggle.classList.toggle('dark');
       if (document.body.classList.contains('dark-mode')) {
         localStorage.setItem('dark-mode', 'enabled');
       } else {
@@ -285,7 +335,6 @@
 
     if (localStorage.getItem('dark-mode') === 'enabled') {
       document.body.classList.add('dark-mode');
-      darkModeToggle.classList.add('dark');
     }
 
     renderTasks();

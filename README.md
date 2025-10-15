@@ -3,7 +3,7 @@
 ## Summary
 This web application was generated to fulfill the following requirement:
 
-Build a todo list application with the ability to add, complete, and delete tasks. Include localStorage for persistence, task categories (work, personal, shopping), dark mode toggle, and priority levels
+change the ui design of this app
 
 ## Setup
 This is a static web application that requires no installation. Simply open `index.html` in a web browser.
@@ -28,4 +28,4 @@ This application is deployed via GitHub Pages and is accessible at the Pages URL
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
-*Generated on 2025-10-15 - Round 1*
+*Generated on 2025-10-15 - Round 2*
